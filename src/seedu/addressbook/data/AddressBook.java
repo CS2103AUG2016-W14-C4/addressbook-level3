@@ -8,6 +8,7 @@ import seedu.addressbook.data.tag.UniqueTagList.*;
 
 import java.util.*;
 
+
 /**
  * Represents the entire address book. Contains the data of the address book.
  *
@@ -16,7 +17,12 @@ import java.util.*;
  *  - The tags in each person point to tag objects in the master list. (== equality)
  */
 public class AddressBook {
-
+	
+	/*
+	 * Exception that is thrown when the tag being searched for does not exist in the current list of tags.
+	 */
+	public static class TagDoesNotExistException extends Exception {}
+	
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
 
@@ -157,5 +163,24 @@ public class AddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(allPersons, allTags);
+    }
+    
+    /**
+     * Goes through allPersons list to find the persons under the particular tag and returns that list of persons
+     * @param tag
+     * @return list of persons under tag
+     */
+    public List<ReadOnlyPerson> getPersonsUnderTag(Tag tag) throws TagDoesNotExistException {
+    	if (!allTags.contains(tag)) {
+    		throw new TagDoesNotExistException();
+    	}
+    	List<ReadOnlyPerson> personsUnderTag = new ArrayList<ReadOnlyPerson>();
+    	for (Person p: allPersons) {
+    		if (p.getTags().contains(tag)) {
+    			personsUnderTag.add(p);
+    		}
+    	}
+    	return personsUnderTag;
+    	
     }
 }
