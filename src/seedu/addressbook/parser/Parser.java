@@ -2,12 +2,14 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 
 /**
  * Parses user input.
@@ -25,6 +27,7 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+
 
 
     /**
@@ -73,6 +76,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case ListPersonsUnderTagCommand.COMMAND_WORD:
+            	return prepareListPersonsUnderTag(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -227,6 +233,21 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
-
+    
+    /**
+     * Parses arguments in the context of the find persons under tag command.
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareListPersonsUnderTag(String args) {
+    	
+    	try {
+    		Tag tag = new Tag(args.trim());
+    		return new ListPersonsUnderTagCommand(tag);
+    	} catch (IllegalValueException e) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, 
+    				ListPersonsUnderTagCommand.MESSAGE_USAGE));
+    	}
+    }
 
 }
