@@ -13,4 +13,7 @@ public class Messages {
             "java seedu.addressbook.Main [STORAGE_FILE_PATH]";
     public static final String MESSAGE_WELCOME = "Welcome to your Address Book!";
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
+    public static final String MESSAGE_VIEW_PERSONS_UNDER_TAG = "Viewing %1$s persons under tag %2$s"; 
+	public static final String MESSAGE_NO_PERSONS_UNDER_TAG = "No persons found under tag <" + "%1$s" + ">";
+	public static final String MESSAGE_DOES_NOT_EXIST = "Tag %1$s does not exist";
 }
