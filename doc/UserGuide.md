@@ -37,6 +37,15 @@ Examples:
 Shows a list of all persons in the address book.<br>
 Format: `list`
 
+## Listing all persons under particular tag: `listtag`
+Shows a list of persons under a particular tag.<br>
+Format: `listtag TAG`
+
+> Tags names should be alphanumeric.
+
+Examples:
+* `listtag friend`
+
 ## Finding all persons containing any keyword in their name: `find`
 Finds persons whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
