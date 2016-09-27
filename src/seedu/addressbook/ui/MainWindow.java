@@ -86,10 +86,6 @@ public class MainWindow {
         if(resultPersons.isPresent()) {
             List<? extends ReadOnlyPerson> persons = new ArrayList<ReadOnlyPerson>(resultPersons.get());
             persons.sort((ReadOnlyPerson left, ReadOnlyPerson right)->left.getName().fullName.compareTo(right.getName().fullName));
-            for (ReadOnlyPerson p : persons) {
-                System.out.print(p.getName().fullName + ", ");
-            }
-            System.out.println();
             display(persons);
         }
         display(result.feedbackToUser);
