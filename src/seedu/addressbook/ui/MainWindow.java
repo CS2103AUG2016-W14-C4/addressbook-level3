@@ -10,6 +10,7 @@ import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,8 @@ public class MainWindow {
             displayResult(result);
             clearCommandInput();
         } catch (Exception e) {
-            display(e.getMessage());
+            e.printStackTrace();
+            //display(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -82,7 +84,13 @@ public class MainWindow {
         clearOutputConsole();
         final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
         if(resultPersons.isPresent()) {
-            display(resultPersons.get());
+            List<? extends ReadOnlyPerson> persons = new ArrayList<ReadOnlyPerson>(resultPersons.get());
+            persons.sort((ReadOnlyPerson left, ReadOnlyPerson right)->left.getName().fullName.compareTo(right.getName().fullName));
+            for (ReadOnlyPerson p : persons) {
+                System.out.print(p.getName().fullName + ", ");
+            }
+            System.out.println();
+            display(persons);
         }
         display(result.feedbackToUser);
     }
